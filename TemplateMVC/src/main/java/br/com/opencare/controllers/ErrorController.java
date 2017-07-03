@@ -10,8 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ErrorController {
 
-	@RequestMapping(value = "errors", method = RequestMethod.GET)
+	@RequestMapping(value = "/errors", method = RequestMethod.GET)
 	public ModelAndView renderErrorPage(HttpServletRequest httpRequest) {
+		return renderErrorPagePOST(httpRequest);
+	}
+
+	@RequestMapping(value = "/errors", method = RequestMethod.POST)
+	public ModelAndView renderErrorPagePOST(HttpServletRequest httpRequest) {
 
 		ModelAndView errorPage = new ModelAndView("errorPage");
 		String errorMsg = "";

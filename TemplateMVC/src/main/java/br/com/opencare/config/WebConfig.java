@@ -3,6 +3,7 @@ package br.com.opencare.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -33,4 +34,19 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
+
+	@Bean
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
+		source.setBasename("classpath:messages");
+		source.setDefaultEncoding("UTF-8");
+		return source;
+	}
+
+	/*
+	 * @Bean public SessionLocaleResolver localeResolver() {
+	 * SessionLocaleResolver locale = new SessionLocaleResolver(); Locale en =
+	 * new Locale("en"); locale.setDefaultLocale(en); return locale; }
+	 */
+
 }
