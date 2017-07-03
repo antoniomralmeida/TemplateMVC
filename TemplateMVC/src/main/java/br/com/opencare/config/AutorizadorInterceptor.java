@@ -1,4 +1,4 @@
-package br.com.opencare.spring;
+package br.com.opencare.config;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,11 +15,12 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		String uri = request.getRequestURI();
-		if (uri.startsWith("/webjars") || uri.endsWith("login") || uri.endsWith("loginpost")) {
+		if (uri.startsWith("/error") || uri.startsWith("/user/postregister") || uri.startsWith("/user/register")
+				|| uri.startsWith("/webjars") || uri.endsWith("login") || uri.endsWith("loginpost")) {
 			return true;
 		}
 
-		response.sendRedirect("user/login");
+		response.sendRedirect("/user/login");
 		return false;
 	}
 }

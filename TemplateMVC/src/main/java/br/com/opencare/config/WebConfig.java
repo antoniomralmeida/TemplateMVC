@@ -1,4 +1,4 @@
-package br.com.opencare.spring;
+package br.com.opencare.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @ComponentScan({ "br.com.opencare" })
 public class WebConfig extends WebMvcConfigurerAdapter {
+
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");

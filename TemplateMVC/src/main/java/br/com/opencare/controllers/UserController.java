@@ -35,14 +35,11 @@ public class UserController {
 		return model;
 	}
 
-	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public String sendUserForm(@ModelAttribute("user") User user, Model model) {
-		if (user != null) {
-			// userService..add(user);
-			model.addAttribute("user", user);
-			model.addAttribute("msg", "Usuário inderido com sucesso!");
-		}
-		return "userDetais";
+	@RequestMapping(value = "postregister", method = RequestMethod.POST)
+	public String sendUserForm(HttpServletRequest request, @ModelAttribute("user") User user, Model model) {
+		userService.save(user);
+		request.getSession().setAttribute("user", user.getEmail());
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.GET)
