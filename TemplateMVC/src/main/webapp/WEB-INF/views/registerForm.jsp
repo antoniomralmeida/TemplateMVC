@@ -9,6 +9,14 @@
 				modelAttribute="user" role="form">
 				<h4>Informe os dados do usuário.</h4>
 				<div class="form-group">
+					<form:label path="name" class="col-md-2 control-label" for="Email">Nome</form:label>
+					<div class="col-md-10">
+						<form:input path="name" class="form-control" required="required" />
+					</div>
+					<form:errors path="name" cssClass="text-warning" />
+				</div>
+			
+				<div class="form-group">
 					<form:label path="email" class="col-md-2 control-label" for="Email">Email</form:label>
 					<div class="col-md-10">
 						<form:input path="email" class="form-control" required="required" />

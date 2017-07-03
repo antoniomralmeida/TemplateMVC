@@ -1,29 +1,51 @@
 package br.com.opencare.model;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostUpdate;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 @Entity
 // @NamedQuery(name = "CMAttribute.findByEntity", query = "SELECT c FROM
 // CMAttribute c where c.entity.id = ?1")
-public class User extends EntityTemplate {
+public class User {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1481771056872902462L;
+	private static final long serialVersionUID = -1746304252392913576L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected long id;
+	private long id;
 
+	@Column(length = 40, nullable = false)
+	private String name;
+	@Column(length = 40, nullable = false, unique = true)
 	private String email;
+	@Column(length = 60, nullable = false)
 	private String pwd;
 
 	@Transient
 	private String confirmPwd;
+
+	@Version
+	@Column(nullable = false)
+	protected Timestamp timestamp;
+
+	@PrePersist
+	@PostUpdate
+	protected void updateTimeStamps() {
+		timestamp = new Timestamp(new Date().getTime());
+	}
 
 	public User() {
 	}
@@ -60,6 +82,14 @@ public class User extends EntityTemplate {
 
 	public void setConfirmPwd(String confirmPwd) {
 		this.confirmPwd = confirmPwd;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
