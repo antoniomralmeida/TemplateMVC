@@ -1,4 +1,4 @@
-package br.com.opencare.controllers;
+package br.com.opencare.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

@@ -1,18 +1,20 @@
-package br.com.opencare.controllers;
+package br.com.opencare.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.opencare.model.User;
-import br.com.opencare.services.UserService;
+import br.com.opencare.service.UserService;
 
 @Controller
 @RequestMapping("/user/*")
@@ -38,7 +40,7 @@ public class UserController {
 	@RequestMapping(value = "postregister", method = RequestMethod.POST)
 	public String sendUserForm(HttpServletRequest request, @ModelAttribute("user") User user, Model model) {
 		userService.save(user);
-		request.getSession().setAttribute("user", user.getEmail());
+		request.getSession().setAttribute("user", user.getName());
 		return "redirect:/";
 	}
 
@@ -50,9 +52,16 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "postlogin", method = RequestMethod.POST)
-	public String makeLogin(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("user") User user,
-			Model model) {
-		request.getSession().setAttribute("user", user.getEmail());
+	public String makeLogin(ModelMap model, @Valid User user, BindingResult result, HttpServletRequest request) {
+		if (result.hasErrors())
+			return "loginForm";
+
+		if (userService.login(user.getEmail(), user.getPwd()))
+			request.getSession().setAttribute("user", user.getEmail());
+		else {
+			model.put("errorMessage", "Invalid Credentials");
+			return "loginForm";
+		}
 		return "redirect:/";
 	}
 

@@ -6,7 +6,7 @@
 	<div class="col-md-8">
 		<section id="loginForm">
 			<form:form class="form-horizontal" method="post" action="/user/postlogin"
-				modelAttribute="user" role="form">
+							modelAttribute="user" role="form">
 				<h4>Usar uma conta local para efetuar login.</h4>
 				<div class="form-group">
 					<form:label path="email" class="col-md-2 control-label" for="Email">Email</form:label>
@@ -29,13 +29,17 @@
 					<div class="col-md-offset-2 col-md-10">
 						<input type="submit" class="btn btn-default btn-main"
 							 value="Efetuar login">
-						<a class="btn btn-default" href="/user/forgotpassword">Esqueci
+						<a class="btn btn-default" href="<c:url value="/user/forgotpassword"/>">Esqueci
 							Minha Senha</a> 
-							<a class="btn btn-default" href="/user/register">Novo
+							<a class="btn btn-default" href="<c:url value="/user/register"/>">Novo
 							Usu&#225;rio</a>
+				
 					</div>
+				<p class="text-warning">${errorMessage}</p>
+			
 				</div>
-			</form:form>
+				
+				</form:form>
 		</section>
 	</div>
 </div>

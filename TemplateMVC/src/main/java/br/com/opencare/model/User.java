@@ -12,6 +12,7 @@ import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.Size;
 
 @Entity
 // @NamedQuery(name = "CMAttribute.findByEntity", query = "SELECT c FROM
@@ -32,6 +33,7 @@ public class User {
 	@Column(length = 40, nullable = false, unique = true)
 	private String email;
 	@Column(length = 60, nullable = false)
+	@Size(min = 6, message = "Enter at least 6 Characters.")
 	private String pwd;
 
 	@Transient

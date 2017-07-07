@@ -1,6 +1,7 @@
 package br.com.opencare.dao;
 
-import org.hibernate.Criteria;
+import javax.persistence.TypedQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,15 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Iterable<User> findAll() {
-		Criteria criteria = getSession().createCriteria(User.class);
-		return criteria.list();
+		TypedQuery<User> query = getSession().createQuery("select u from User u");
+		return query.getResultList();
+	}
+
+	@Override
+	public Boolean login(String email, String pwd) {
+		TypedQuery<User> query = getSession().createQuery("select u from User u where email = :email and pwd = :pwd");
+		query.setParameter("email", email);
+		query.setParameter("pwd", pwd);
+		return query.getResultList().size() > 0;
 	}
 }

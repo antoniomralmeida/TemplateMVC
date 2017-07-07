@@ -8,10 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8" />
 <title>Template MVC</title>
-<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="/webjars/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
-<link href="/webjars/css/local.css" rel="stylesheet">
+<link href="<c:url value="/webjars/bootstrap/3.3.6/css/bootstrap.css"/>" rel="stylesheet">
+<link href="<c:url value="/resources/css/local.css"/>" rel="stylesheet">
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">

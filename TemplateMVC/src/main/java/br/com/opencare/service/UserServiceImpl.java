@@ -1,4 +1,4 @@
-package br.com.opencare.services;
+package br.com.opencare.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +41,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(User entity) {
 		userdao.delete(entity);
+	}
+
+	@Override
+	public Boolean login(String email, String pwd) {
+		return userdao.login(email, pwd);
 	}
 }

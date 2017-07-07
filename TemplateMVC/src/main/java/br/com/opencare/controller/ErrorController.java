@@ -1,4 +1,4 @@
-package br.com.opencare.controllers;
+package br.com.opencare.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
