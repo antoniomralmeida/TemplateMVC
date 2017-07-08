@@ -29,6 +29,7 @@ public class User {
 	private long id;
 
 	@Column(length = 40, nullable = false)
+	@Size(min = 10, message = "Enter at least 10 Characters.")
 	private String name;
 	@Column(length = 40, nullable = false, unique = true)
 	private String email;

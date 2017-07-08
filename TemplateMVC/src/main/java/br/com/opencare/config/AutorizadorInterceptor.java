@@ -16,13 +16,12 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 
 		String uri = request.getRequestURI();
 		System.out.println(uri);
-		if (uri.endsWith("/errors") || uri.endsWith("/user/login") || uri.endsWith("/user/postregister")
-				|| uri.endsWith("/user/register") || uri.contains("/webjars/") || uri.contains("/resources/")
-				|| uri.endsWith("/user/postlogin")) {
+		if (uri.endsWith("/errors") || uri.endsWith("/login") || uri.endsWith("/user/postregister")
+				|| uri.endsWith("/user/register") || uri.contains("/webjars/") || uri.contains("/resources/")) {
 			return true;
 		}
 
-		response.sendRedirect(request.getContextPath() + "/user/login");
+		response.sendRedirect(request.getContextPath() + "/login");
 		return false;
 	}
 }
