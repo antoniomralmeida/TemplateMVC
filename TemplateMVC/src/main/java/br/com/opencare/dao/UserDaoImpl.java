@@ -48,10 +48,14 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Boolean login(String email, String pwd) {
+	public User login(String email, String pwd) {
 		TypedQuery<User> query = getSession().createQuery("select u from User u where email = :email and pwd = :pwd");
 		query.setParameter("email", email);
 		query.setParameter("pwd", pwd);
-		return query.getResultList().size() > 0;
+		return query.getSingleResult();
+		/*
+		 * if (query.getResultList().size() == 0) return null; else return
+		 * query.getSingleResult();
+		 */
 	}
 }

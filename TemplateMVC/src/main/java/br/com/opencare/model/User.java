@@ -12,11 +12,14 @@ import javax.persistence.PostUpdate;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
-// @NamedQuery(name = "CMAttribute.findByEntity", query = "SELECT c FROM
-// CMAttribute c where c.entity.id = ?1")
 public class User {
 
 	/**
@@ -32,13 +35,21 @@ public class User {
 	@Size(min = 10, message = "Enter at least 10 Characters.")
 	private String name;
 	@Column(length = 40, nullable = false, unique = true)
+	@Email
+	@NotEmpty
 	private String email;
 	@Column(length = 60, nullable = false)
-	@Size(min = 6, message = "Enter at least 6 Characters.")
+	@NotEmpty
+	@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Min 8, upper, lower, digit and special char.")
 	private String pwd;
 
 	@Transient
 	private String confirmPwd;
+
+	@AssertTrue(message = "passVerify field should be equal than pass field")
+	private boolean isValid() {
+		return this.pwd.equals(this.confirmPwd);
+	}
 
 	@Version
 	@Column(nullable = false)

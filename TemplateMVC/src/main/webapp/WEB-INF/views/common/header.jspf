@@ -1,3 +1,6 @@
+<%@page import="br.com.opencare.model.User"  language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -22,24 +25,25 @@
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">SpringMVC2</a>
+				<a class="navbar-brand" href="/">TemplateMVC</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="/">In&#237;cio</a></li>
-					<li><a href="/Help">Help</a></li>
+					<li><a href="<c:url value="/"/>">In&#237;cio</a></li>
+					<li><a href="/menu">Menu</a></li>
 				</ul>
 
-				<% Object user = request.getSession().getAttribute("user");
+				<% User user = (User)request.getSession().getAttribute("user");
 					if (user ==null) {%>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/user/register" id="registerLink">Registrar</a></li>
-					<li><a href="/user/login" id="loginLink">Fazer logon</a></li>
+					<li><a href="<c:url value="/user/register"/>" id="registerLink">Registrar</a></li>
+					<li><a href="<c:url value="/user/login"/>" id="loginLink">Fazer logon</a></li>
 				</ul>
-				<% } else {%>
+				<% } else {
+					String name=user.getName();%>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="/user/detais" id="detaisLink">${user}</a></li>
-					<li><a href="/user/logout" id="loginLink">Fazer logout</a></li>
+					<li><a href="<c:url value="/user/detais"/>" id="detaisLink"><%=name%></a></li>
+					<li><a href="<c:url value="/user/logout/"/>" id="loginLink">Fazer logout</a></li>
 				</ul>
 				<% } %>
 				

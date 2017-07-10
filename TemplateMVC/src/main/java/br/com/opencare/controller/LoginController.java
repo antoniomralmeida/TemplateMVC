@@ -30,11 +30,13 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String makeLogin(ModelMap model, @Valid User user, BindingResult result, HttpServletRequest request) {
 
-		if (!userService.login(user.getEmail(), user.getPwd())) {
+		User u = userService.login(user.getEmail(), user.getPwd());
+		if (u == null) {
 			model.put("errorMessage", "Invalid Credentials!");
 			return "loginForm";
 		}
-		request.getSession().setAttribute("user", user.getEmail());
+		request.getSession().setAttribute("user", u);
+		model.clear();
 		return "redirect:/";
 	}
 

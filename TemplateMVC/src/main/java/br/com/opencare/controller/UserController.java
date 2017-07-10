@@ -35,7 +35,7 @@ public class UserController {
 		return model;
 	}
 
-	@RequestMapping(value = "postregister", method = RequestMethod.POST)
+	@RequestMapping(value = "register", method = RequestMethod.POST)
 	public ModelAndView sendUserForm(@Valid @ModelAttribute("user") User user, BindingResult result,
 			HttpServletRequest request) {
 		if (result.hasErrors()) {
@@ -43,7 +43,7 @@ public class UserController {
 			return model;
 		}
 		userService.save(user);
-		request.getSession().setAttribute("user", user.getName());
+		request.getSession().setAttribute("name", user.getName());
 		return new ModelAndView("wellcome");
 	}
 

@@ -5,7 +5,8 @@
 <div class="row">
 	<div class="col-md-8">
 		<section id="loginForm">
-			<form:form class="form-horizontal" method="post" action="/login"
+			<c:url var="post_url" value="/login" />
+			<form:form class="form-horizontal" method="post" action="${post_url}"
 				modelAttribute="user" role="form">
 				<h4>Usar uma conta local para efetuar login.</h4>
 				<div class="form-group">
@@ -20,6 +21,7 @@
 					<div class="col-md-10">
 						<form:input path="pwd" type="password" class="form-control"
 							required="required" />
+						<span class="field-validation-valid text-danger">${errorMessage}</span>
 					</div>
 				</div>
 
@@ -29,8 +31,7 @@
 							value="Efetuar login"> <a class="btn btn-default"
 							href="<c:url value="/user/forgotpassword"/>">Esqueci Minha
 							Senha</a> <a class="btn btn-default"
-							href="<c:url value="/user/register"/>">Novo Usu&#225;rio</a> <br><span
-							class="alert-warning">${errorMessage}</span>
+							href="<c:url value="/user/register"/>">Novo Usu&#225;rio</a>
 
 					</div>
 
