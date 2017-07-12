@@ -43,11 +43,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		source.setDefaultEncoding("UTF-8");
 		return source;
 	}
+
 	/*
 	 * @Bean(name = "simpleMappingExceptionResolver") public
 	 * SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
 	 * SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
-	 * 
 	 * r.setDefaultErrorView("errorPage"); // No default return r; }
 	 * 
 	 * /*
