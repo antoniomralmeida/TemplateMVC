@@ -41,8 +41,6 @@ public class User {
 	@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Min 8, upper, lower, digit and special char.")
 	private String pwd;
 
-	@Transient
-	private String confirmPwd;
 
 	@Column(length = 10, nullable = false)
 	private String state = State.ACTIVE.getState();
@@ -57,11 +55,6 @@ public class User {
 	public User() {
 	}
 
-	@AssertTrue(message = "passVerify field should be equal than pass field")
-	private boolean isValid() {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		return this.pwd.equals(passwordEncoder.encode(this.confirmPwd));
-	}
 
 	public long getId() {
 		return id;
@@ -81,14 +74,6 @@ public class User {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
-	}
-
-	public String getConfirmPwd() {
-		return confirmPwd;
-	}
-
-	public void setConfirmPwd(String confirmPwd) {
-		this.confirmPwd = confirmPwd;
 	}
 
 	public String getName() {

@@ -24,13 +24,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		System.out.println("Email : " + email);
 		User user = userService.findByEmail(email);
 		System.out.println("User : " + user);
 		if (user == null) {
 			System.out.println("User not found");
 			throw new UsernameNotFoundException("Username not found");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getConfirmPwd(),
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPwd(),
 				user.getState().equals("Active"), true, true, true, getGrantedAuthorities(user));
 	}
 

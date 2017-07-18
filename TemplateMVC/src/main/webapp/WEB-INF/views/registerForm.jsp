@@ -48,16 +48,6 @@
 				</div>
 
 				<div class="form-group">
-					<form:label path="confirmPwd" class="col-md-2 control-label">confirma senha</form:label>
-					<div class="col-md-10">
-						<form:input path="confirmPwd" type="password" class="form-control"
-							required="required" />
-					</div>
-					<form:errors path="confirmPwd"
-						cssClass="field-validation-valid text-danger" />
-				</div>
-
-				<div class="form-group">
 					<div class="col-md-offset-2 col-md-10">
 						<input type="submit" class="btn btn-default btn-main" value="Confirmar">
 						<a class="btn btn-default"

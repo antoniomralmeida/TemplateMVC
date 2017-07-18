@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.opencare.model.User;
@@ -21,13 +22,24 @@ public class LoginController {
 	UserService userService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView showLoginPage() {
-		ModelAndView model = new ModelAndView("loginForm");
-		model.addObject("user", new User());
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout) {
+
+		ModelAndView model = new ModelAndView();
+		if (error != null) {
+			model.addObject("error", "Invalid username and password!");
+		}
+
+		if (logout != null) {
+			model.addObject("msg", "You've been logged out successfully.");
+		}
+		model.setViewName("loginForm");
+
 		return model;
+
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String makeLogin(ModelMap model, @Valid User user, BindingResult result, HttpServletRequest request) {
 
 		User u = userService.login(user.getEmail(), user.getPwd());
@@ -39,5 +51,5 @@ public class LoginController {
 		model.clear();
 		return "redirect:/";
 	}
-
+*/
 }

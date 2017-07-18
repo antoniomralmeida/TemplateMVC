@@ -7,28 +7,36 @@
 		<section id="loginForm">
 			<c:url var="post_url" value="/login" />
 			<form:form class="form-horizontal" method="post" action="${post_url}"
-				modelAttribute="user" role="form">
+				role="form">
 				<h4>Usar uma conta local para efetuar login.</h4>
 
 				<div class="validation-summary-errors text-danger">
-					<ul>
-						<li>${errorMessage}</li>
-					</ul>
-				</div>
+
+					${errorMessage}</div>
+
+				<c:if test="${not empty error}">
+					<div class="error">${error}</div>
+				</c:if>
+				<c:if test="${not empty msg}">
+					<div class="msg">${msg}</div>
+				</c:if>
 				<div class="form-group">
-					<form:label path="email" class="col-md-2 control-label" for="Email">Email</form:label>
+					<label for="email" class="col-md-2 control-label">E-mail</label>
 					<div class="col-md-10">
-						<form:input path="email" class="form-control" required="required" />
+						<input id="username" name="username" class="form-control"
+							required="required" type="text" value="" />
 					</div>
 				</div>
 
 				<div class="form-group">
-					<form:label path="pwd" class="col-md-2 control-label">senha</form:label>
+					<label for="pwd" class="col-md-2 control-label">Password</label>
 					<div class="col-md-10">
-						<form:input path="pwd" type="password" class="form-control"
-							required="required" />
+						<input id="password" name="password" type="password" class="form-control"
+							required="required" value="" />
 					</div>
 				</div>
+
+
 
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-10">
@@ -38,6 +46,8 @@
 
 					</div>
 				</div>
+				<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
 			</form:form>
 		</section>
 	</div>

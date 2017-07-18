@@ -1,6 +1,5 @@
-<%@page import="br.com.opencare.model.User"  language="java" contentType="text/html; charset=ISO-8859-1"
+<%@page import="org.springframework.security.core.Authentication,org.springframework.security.core.context.SecurityContextHolder"  language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -33,17 +32,20 @@
 					<li><a href="/menu">Menu</a></li>
 				</ul>
 
-				<% User user = (User)request.getSession().getAttribute("user");
+				<% 
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				String user = auth.getName(); // get logged in username
+
 					if (user ==null) {%>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="<c:url value="/user/register"/>" id="registerLink">Registrar</a></li>
 					<li><a href="<c:url value="/user/login"/>" id="loginLink">Fazer logon</a></li>
 				</ul>
 				<% } else {
-					String name=user.getName();%>
+					%>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="<c:url value="/user/detais"/>" id="detaisLink"><%=name%></a></li>
-					<li><a href="<c:url value="/user/logout/"/>" id="loginLink">Fazer logout</a></li>
+					<li><a href="<c:url value="/user/detais"/>" id="detaisLink"><%=user%></a></li>
+					<li><a href="<c:url value="${logoutUrl}"/>" id="loginLink">Fazer logout</a></li>
 				</ul>
 				<% } %>
 				
