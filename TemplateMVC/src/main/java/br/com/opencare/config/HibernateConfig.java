@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan("br.com.opencare.spring")
+@ComponentScan("br.com.opencare")
 @PropertySource(value = { "classpath:config.properties" })
 public class HibernateConfig {
 

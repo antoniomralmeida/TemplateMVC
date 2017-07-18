@@ -10,6 +10,8 @@ public interface CrudDAO<T, ID extends Serializable> {
 
 	public Iterable<T> findAll();
 
+	public long count();
+
 	public void delete(ID id);
 
 	public void delete(T entity);

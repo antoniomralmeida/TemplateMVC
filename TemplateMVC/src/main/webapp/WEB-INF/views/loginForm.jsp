@@ -9,6 +9,12 @@
 			<form:form class="form-horizontal" method="post" action="${post_url}"
 				modelAttribute="user" role="form">
 				<h4>Usar uma conta local para efetuar login.</h4>
+
+				<div class="validation-summary-errors text-danger">
+					<ul>
+						<li>${errorMessage}</li>
+					</ul>
+				</div>
 				<div class="form-group">
 					<form:label path="email" class="col-md-2 control-label" for="Email">Email</form:label>
 					<div class="col-md-10">
@@ -21,7 +27,6 @@
 					<div class="col-md-10">
 						<form:input path="pwd" type="password" class="form-control"
 							required="required" />
-						<span class="field-validation-valid text-danger">${errorMessage}</span>
 					</div>
 				</div>
 
@@ -29,15 +34,10 @@
 					<div class="col-md-offset-2 col-md-10">
 						<input type="submit" class="btn btn-default btn-main"
 							value="Efetuar login"> <a class="btn btn-default"
-							href="<c:url value="/user/forgotpassword"/>">Esqueci Minha
-							Senha</a> <a class="btn btn-default"
-							href="<c:url value="/user/register"/>">Novo Usu&#225;rio</a>
+							href="<c:url value="/user/register"/>">Registre-se</a>
 
 					</div>
-
-
 				</div>
-
 			</form:form>
 		</section>
 	</div>

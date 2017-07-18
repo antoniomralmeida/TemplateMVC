@@ -9,7 +9,16 @@
 			<form:form class="form-horizontal" method="post" action="${post_url}"
 				modelAttribute="user" role="form">
 				<h4>Informe os dados do novo usuário.</h4>
-				<form:errors path="*" cssClass="errorblock" />
+				
+				
+				<div class="validation-summary-errors text-danger">
+					<ul>
+						<li style="display: none"><form:errors path="*" /></li>
+					</ul>
+				</div>
+				
+				
+				
 				<div class="form-group">
 					<form:label path="name" class="col-md-2 control-label" for="Email">Nome</form:label>
 					<div class="col-md-10">

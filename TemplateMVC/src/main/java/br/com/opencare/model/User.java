@@ -1,15 +1,17 @@
 package br.com.opencare.model;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PostUpdate;
-import javax.persistence.PrePersist;
+import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.AssertTrue;
@@ -18,14 +20,10 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 public class User {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1746304252392913576L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,28 +44,23 @@ public class User {
 	@Transient
 	private String confirmPwd;
 
-	@AssertTrue(message = "passVerify field should be equal than pass field")
-	private boolean isValid() {
-		return this.pwd.equals(this.confirmPwd);
-	}
+	@Column(length = 10, nullable = false)
+	private String state = State.ACTIVE.getState();
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
 	@Version
 	@Column(nullable = false)
 	protected Timestamp timestamp;
 
-	@PrePersist
-	@PostUpdate
-	protected void updateTimeStamps() {
-		timestamp = new Timestamp(new Date().getTime());
-	}
-
 	public User() {
 	}
 
-	public User(String email, String pwd) {
-		super();
-		this.email = email;
-		this.pwd = pwd;
+	@AssertTrue(message = "passVerify field should be equal than pass field")
+	private boolean isValid() {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return this.pwd.equals(passwordEncoder.encode(this.confirmPwd));
 	}
 
 	public long getId() {
@@ -104,6 +97,26 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Set<UserProfile> getUserProfiles() {
+		return userProfiles;
+	}
+
+	public void setUserProfiles(Set<UserProfile> userProfiles) {
+		this.userProfiles = userProfiles;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 }
