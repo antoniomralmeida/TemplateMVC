@@ -41,10 +41,13 @@ public class UserController {
 		if (result.hasErrors()) {
 			ModelAndView model = new ModelAndView("registerForm");
 			return model;
+		} else {
+			
+			userService.save(user);
+			ModelAndView model = new ModelAndView("loginForm");
+			model.addObject("username", user.getEmail());
+			return model;
 		}
-		userService.save(user);
-		request.getSession().setAttribute("name", user.getName());
-		return new ModelAndView("wellcome");
 	}
 
 	@RequestMapping(value = "logout", method = RequestMethod.GET)

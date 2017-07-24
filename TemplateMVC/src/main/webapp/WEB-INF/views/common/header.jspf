@@ -1,6 +1,4 @@
-<%@page import="org.springframework.beans.factory.annotation.Autowired"%>
-<%@page import="br.com.opencare.service.UserService"%>
-<%@page import="org.springframework.security.core.Authentication,org.springframework.security.core.context.SecurityContextHolder"  language="java" contentType="text/html; charset=ISO-8859-1"
+<%@page  language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -34,15 +32,14 @@
 					<li><a href="/menu">Menu</a></li>
 				</ul>
 
-				<% 
-					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-					String login = auth.getName(); // get logged in username
-					if (login.equals("anonymousUser")) {%>
+				<% 	if (request.getAttribute("login")==null) {
+					%>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="<c:url value="/user/register"/>" id="registerLink">Registrar</a></li>
 					<li><a href="<c:url value="/login"/>" id="loginLink">Fazer logon</a></li>
 				</ul>
 				<% } else {
+					String login = (String)request.getAttribute("login");
 					%>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="<c:url value="/user/detais"/>" id="detaisLink"><%=login%></a></li>

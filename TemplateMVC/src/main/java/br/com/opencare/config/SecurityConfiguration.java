@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -45,25 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().antMatchers("/", "/user/**", "/login/**", "/webjars/**", "/resources/**").permitAll()
 				.and().formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username")
-				.passwordParameter("password").and().logout().logoutSuccessUrl("/").and().csrf();
-
-		/*
-		 * http.authorizeRequests().antMatchers("/", "/user/**", "/login/**",
-		 * "/webjars/**", "/resources/**").permitAll()
-		 * .antMatchers(HttpMethod.POST,"/login").permitAll()
-		 * .anyRequest().authenticated()
-		 * .and().formLogin().permitAll().loginPage("/login")
-		 * .and().logout().logoutUrl("/logout").invalidateHttpSession(true).
-		 * logoutSuccessUrl("/login");
-		 * 
-		 * 
-		 * //http.authorizeRequests().antMatchers("/",
-		 * "/home").permitAll().antMatchers("/admin/**", "/newuser") //
-		 * .access("hasRole('ADMIN')").antMatchers("/db/**").
-		 * access("hasRole('ADMIN') and hasRole('DBA')").and() //
-		 * .formLogin().loginPage("/login").usernameParameter("email").
-		 * passwordParameter("pwd").and().csrf() //
-		 * .and().exceptionHandling().accessDeniedPage("/error");
-		 */
+				.passwordParameter("password").and().logout().logoutSuccessUrl("/").and().csrf().and()
+				.exceptionHandling().accessDeniedPage("/accessdenied");
 	}
 }

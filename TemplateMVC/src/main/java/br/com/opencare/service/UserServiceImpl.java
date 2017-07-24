@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public <S extends User> S save(S entity) {
 		entity.setPwd(passwordEncoder.encode(entity.getPwd()));
+
 		return dao.save(entity);
 	}
 

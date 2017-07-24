@@ -11,16 +11,20 @@ public class UserProfile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	@Column(name = "TYPE", length = 15, unique = true, nullable = false)
 	private String type = UserProfileType.USER.getUserProfileType();
 
-	public int getId() {
+	public UserProfile(String type) {
+		this.type = type;
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

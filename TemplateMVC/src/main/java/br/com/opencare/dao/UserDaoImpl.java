@@ -1,5 +1,8 @@
 package br.com.opencare.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
@@ -9,9 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import br.com.opencare.model.User;
 import br.com.opencare.model.UserProfile;
+import br.com.opencare.model.UserProfileType;
 
 @Repository
 public class UserDaoImpl implements UserDao {
+
+	static public List<UserProfile> profiles = new ArrayList<UserProfile>();
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -22,15 +28,18 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public <S extends User> S save(S entity) {
-		if (entity.getUserProfiles().size() == 0) {
-			UserProfile up = new UserProfile();
-			if (count() == 0)
-				up.setType("SYSADMIN");
-			else
-				up.setType("USER");
-			entity.getUserProfiles().add(up);
-		}
 
+		if (profiles.size() == 0)
+			for (int i = 0; i < UserProfileType.values().length; i++)
+				profiles.add(new UserProfile(UserProfileType.values()[i].getUserProfileType()));
+
+		if (entity.getUserProfiles().size() == 0) {
+			if (count() == 0)
+				entity.getUserProfiles().add(profiles.get(UserProfileType.SYSADMIN.ordinal()));
+
+			else
+				entity.getUserProfiles().add(profiles.get(UserProfileType.USER.ordinal()));
+		}
 		getSession().saveOrUpdate(entity);
 		return (S) getSession().get(User.class, entity.getId());
 	}
