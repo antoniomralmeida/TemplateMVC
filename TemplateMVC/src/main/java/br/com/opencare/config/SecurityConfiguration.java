@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,28 +42,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+
 		http.authorizeRequests().antMatchers("/", "/user/**", "/login/**", "/webjars/**", "/resources/**").permitAll()
-		.and()
-			.formLogin().loginPage("/login").failureUrl("/login?error")
-				.usernameParameter("username").passwordParameter("password")
-			
-		.and()
-			.logout().logoutSuccessUrl("/")
-		.and()
-			.csrf(); 
-		
-		
-		/*http.authorizeRequests().antMatchers("/", "/user/**", "/login/**", "/webjars/**", "/resources/**").permitAll()
-		.antMatchers(HttpMethod.POST,"/login").permitAll()
-		.anyRequest().authenticated()
-	    .and().formLogin().permitAll().loginPage("/login")
-	    .and().logout().logoutUrl("/logout").invalidateHttpSession(true).logoutSuccessUrl("/login");
-	   
-		
-		//http.authorizeRequests().antMatchers("/", "/home").permitAll().antMatchers("/admin/**", "/newuser")
-		//		.access("hasRole('ADMIN')").antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')").and()
-		//		.formLogin().loginPage("/login").usernameParameter("email").passwordParameter("pwd").and().csrf()
-		//		.and().exceptionHandling().accessDeniedPage("/error");  */
+				.and().formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username")
+				.passwordParameter("password").and().logout().logoutSuccessUrl("/").and().csrf();
+
+		/*
+		 * http.authorizeRequests().antMatchers("/", "/user/**", "/login/**",
+		 * "/webjars/**", "/resources/**").permitAll()
+		 * .antMatchers(HttpMethod.POST,"/login").permitAll()
+		 * .anyRequest().authenticated()
+		 * .and().formLogin().permitAll().loginPage("/login")
+		 * .and().logout().logoutUrl("/logout").invalidateHttpSession(true).
+		 * logoutSuccessUrl("/login");
+		 * 
+		 * 
+		 * //http.authorizeRequests().antMatchers("/",
+		 * "/home").permitAll().antMatchers("/admin/**", "/newuser") //
+		 * .access("hasRole('ADMIN')").antMatchers("/db/**").
+		 * access("hasRole('ADMIN') and hasRole('DBA')").and() //
+		 * .formLogin().loginPage("/login").usernameParameter("email").
+		 * passwordParameter("pwd").and().csrf() //
+		 * .and().exceptionHandling().accessDeniedPage("/error");
+		 */
 	}
 }

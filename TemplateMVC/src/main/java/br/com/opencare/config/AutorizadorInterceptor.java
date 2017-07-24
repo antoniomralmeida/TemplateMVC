@@ -3,12 +3,9 @@ package br.com.opencare.config;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import br.com.opencare.service.UserService;
 
 public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 
@@ -19,7 +16,9 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String user = auth.getName(); // get logged in username
 
-		if (!user.isEmpty()) {
+		request.getSession().setAttribute("user", user);
+
+		if (!user.equals("anonymousUser")) {
 			return true;
 		}
 

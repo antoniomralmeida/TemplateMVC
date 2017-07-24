@@ -14,6 +14,11 @@ public class ErrorController {
 
 	private Log logger = LogFactory.getLog(ErrorController.class);
 
+	@RequestMapping(value = "/error", method = RequestMethod.POST)
+	public ModelAndView doPost(HttpServletRequest req, Exception ex) {
+		return doGet(req, ex);
+	}
+
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public ModelAndView doGet(HttpServletRequest req, Exception ex) {
 		logger.error("Request: " + req.getRequestURL() + " raised " + ex);
