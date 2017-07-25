@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.opencare.model.UserProfile;
+import br.com.opencare.model.UserProfileType;
+import br.com.opencare.service.UserProfileService;
 import br.com.opencare.service.UserService;
 
 @Controller
@@ -21,10 +24,21 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	UserProfileService userProfileService;
+
+	private void setupUserProfile() {
+		if (userProfileService.count() == 0) {
+			for (int i = 0; i < UserProfileType.values().length; i++)
+				userProfileService.save(new UserProfile(UserProfileType.values()[i].getUserProfileType()));
+		}
+	}
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+	public ModelAndView loginForm(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {
 
+		setupUserProfile();
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
 			model.addObject("error", "Invalid username and password!");
@@ -34,9 +48,7 @@ public class LoginController {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
 		model.setViewName("loginForm");
-
 		return model;
-
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -50,14 +62,16 @@ public class LoginController {
 										// show login screen again.
 	}
 
-	/*
-	 * @RequestMapping(value = "/login", method = RequestMethod.POST) public
-	 * String makeLogin(ModelMap model, @Valid User user, BindingResult result,
-	 * HttpServletRequest request) {
-	 * 
-	 * User u = userService.login(user.getEmail(), user.getPwd()); if (u ==
-	 * null) { model.put("errorMessage", "Invalid Credentials!"); return
-	 * "loginForm"; } request.getSession().setAttribute("user", u);
-	 * model.clear(); return "redirect:/"; }
-	 */
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
+
+		ModelAndView model = new ModelAndView();
+		if (error != null) {
+			model.addObject("error", "Invalid username and password!");
+		}
+		model.addObject("msg", "You've been logged successfully.");
+		model.setViewName("loginForm");
+		return model;
+	}
+
 }

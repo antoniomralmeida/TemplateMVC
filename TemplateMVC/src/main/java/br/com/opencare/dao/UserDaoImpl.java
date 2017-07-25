@@ -1,8 +1,5 @@
 package br.com.opencare.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
@@ -17,8 +14,6 @@ import br.com.opencare.model.UserProfileType;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-	static public List<UserProfile> profiles = new ArrayList<UserProfile>();
-
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -26,19 +21,18 @@ public class UserDaoImpl implements UserDao {
 		return sessionFactory.getCurrentSession();
 	}
 
+	private UserProfile getSysadmin() {
+		TypedQuery<UserProfile> query = getSession().createQuery("select up from UserProfile up where type = :type");
+		query.setParameter("type", UserProfileType.SYSADMIN.getUserProfileType());
+		return query.getSingleResult();
+	}
+
 	@Override
 	public <S extends User> S save(S entity) {
 
-		if (profiles.size() == 0)
-			for (int i = 0; i < UserProfileType.values().length; i++)
-				profiles.add(new UserProfile(UserProfileType.values()[i].getUserProfileType()));
-
 		if (entity.getUserProfiles().size() == 0) {
 			if (count() == 0)
-				entity.getUserProfiles().add(profiles.get(UserProfileType.SYSADMIN.ordinal()));
-
-			else
-				entity.getUserProfiles().add(profiles.get(UserProfileType.USER.ordinal()));
+				entity.getUserProfiles().add(getSysadmin());
 		}
 		getSession().saveOrUpdate(entity);
 		return (S) getSession().get(User.class, entity.getId());
@@ -66,18 +60,15 @@ public class UserDaoImpl implements UserDao {
 		return query.getResultList();
 	}
 
-	@Override
-	public User login(String email, String pwd) {
-		TypedQuery<User> query = getSession().createQuery("select u from User u where email = :email and pwd = :pwd");
-		query.setParameter("email", email);
-		query.setParameter("pwd", pwd);
-
-		if (query.getResultList().size() == 0)
-			return null;
-		else
-			return query.getSingleResult();
-	}
-
+	/*
+	 * @Override public User login(String email, String pwd) { TypedQuery<User>
+	 * query = getSession().
+	 * createQuery("select u from User u where email = :email and pwd = :pwd");
+	 * query.setParameter("email", email); query.setParameter("pwd", pwd);
+	 * 
+	 * if (query.getResultList().size() == 0) return null; else return
+	 * query.getSingleResult(); }
+	 */
 	@Override
 	public long count() {
 		return getSession().createQuery("select count(1) from  User", Long.class).getSingleResult();

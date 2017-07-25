@@ -12,15 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
 import javax.persistence.Version;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 public class User {
@@ -41,11 +38,10 @@ public class User {
 	@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Min 8, upper, lower, digit and special char.")
 	private String pwd;
 
-
 	@Column(length = 10, nullable = false)
 	private String state = State.ACTIVE.getState();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
 	@Version
@@ -54,7 +50,6 @@ public class User {
 
 	public User() {
 	}
-
 
 	public long getId() {
 		return id;
@@ -102,6 +97,12 @@ public class User {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", email=" + email + ", pwd=" + pwd + ", state=" + state
+				+ ", userProfiles=" + userProfiles + ", timestamp=" + timestamp + "]";
 	}
 
 }

@@ -16,6 +16,9 @@ public class UserProfile {
 	@Column(name = "TYPE", length = 15, unique = true, nullable = false)
 	private String type = UserProfileType.USER.getUserProfileType();
 
+	public UserProfile() {
+	}
+
 	public UserProfile(String type) {
 		this.type = type;
 	}
