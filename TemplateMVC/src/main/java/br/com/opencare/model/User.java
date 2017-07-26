@@ -4,13 +4,14 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.Pattern;
@@ -41,7 +42,9 @@ public class User {
 	@Column(length = 10, nullable = false)
 	private String state = State.ACTIVE.getState();
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "User_UserProfile", joinColumns = { @JoinColumn(name = "User_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "UserProfile_id") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
 	@Version
@@ -103,6 +106,14 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", pwd=" + pwd + ", state=" + state
 				+ ", userProfiles=" + userProfiles + ", timestamp=" + timestamp + "]";
+	}
+
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 
 }

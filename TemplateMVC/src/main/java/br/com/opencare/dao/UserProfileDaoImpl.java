@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.com.opencare.model.UserProfile;
+import br.com.opencare.model.UserProfileType;
 
 @Repository
 public class UserProfileDaoImpl implements UserProfileDao {
@@ -51,4 +52,13 @@ public class UserProfileDaoImpl implements UserProfileDao {
 	public void delete(UserProfile entity) {
 		getSession().delete(entity);
 	}
+
+	@Override
+	public void setupUserProfiles() {
+		if (count() == 0) {
+			for (int i = 0; i < UserProfileType.values().length; i++)
+				save(new UserProfile(UserProfileType.values()[i].getUserProfileType()));
+		}
+	}
+
 }

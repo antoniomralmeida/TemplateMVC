@@ -16,6 +16,7 @@
 					</ul>
 				</div>
 				<form:input type="hidden" path="id" id="id" />
+				<form:input type="hidden" path="timestamp" id="timestamp" />
 
 				<div class="form-group">
 					<form:label path="name" class="col-md-2 control-label" for="name">Nome</form:label>

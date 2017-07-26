@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.com.opencare.model.UserProfile;
-import br.com.opencare.model.UserProfileType;
 import br.com.opencare.service.UserProfileService;
 import br.com.opencare.service.UserService;
 
@@ -27,18 +25,11 @@ public class LoginController {
 	@Autowired
 	UserProfileService userProfileService;
 
-	private void setupUserProfile() {
-		if (userProfileService.count() == 0) {
-			for (int i = 0; i < UserProfileType.values().length; i++)
-				userProfileService.save(new UserProfile(UserProfileType.values()[i].getUserProfileType()));
-		}
-	}
-
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginForm(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout) {
 
-		setupUserProfile();
+		userProfileService.setupUserProfiles();
 		ModelAndView model = new ModelAndView();
 		if (error != null) {
 			model.addObject("error", "Invalid username and password!");

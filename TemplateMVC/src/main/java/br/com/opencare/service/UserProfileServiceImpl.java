@@ -48,4 +48,9 @@ public class UserProfileServiceImpl implements UserProfileService {
 		dao.delete(entity);
 	}
 
+	@Override
+	public void setupUserProfiles() {
+		dao.setupUserProfiles();
+	}
+
 }

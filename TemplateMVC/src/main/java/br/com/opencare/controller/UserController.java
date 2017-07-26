@@ -34,10 +34,10 @@ public class UserController {
 	UserService userService;
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	UserProfileService userProfileService;
 
 	@Autowired
-	UserProfileService userProfileService;
+	private PasswordEncoder passwordEncoder;
 
 	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String listUserForm(Model model) {
@@ -47,6 +47,7 @@ public class UserController {
 
 	@RequestMapping(value = "register", method = RequestMethod.GET)
 	public ModelAndView sendUserForm() {
+		userProfileService.setupUserProfiles();
 		ModelAndView model = new ModelAndView("registerForm");
 		model.addObject("user", new User());
 		return model;
