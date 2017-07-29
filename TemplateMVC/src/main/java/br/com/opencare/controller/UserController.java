@@ -12,9 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,10 +68,10 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-	public ModelAndView sendUserEditForm(@PathVariable("id") long id) {
+	@RequestMapping(value = "edit", method = RequestMethod.GET)
+	public ModelAndView sendUserEditForm(@RequestParam("login") String login) {
 		ModelAndView model = new ModelAndView("editUserForm");
-		model.addObject("user", userService.findOne(id));
+		model.addObject("user", userService.findByEmail(login));
 		return model;
 	}
 
@@ -82,7 +82,6 @@ public class UserController {
 			ModelAndView model = new ModelAndView("editUserForm");
 			return model;
 		} else {
-			System.out.println(user);
 			userService.save(user);
 			ModelAndView model = new ModelAndView("editUserForm");
 			return model;

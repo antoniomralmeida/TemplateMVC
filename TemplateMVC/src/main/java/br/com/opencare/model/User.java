@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +43,7 @@ public class User {
 	@Column(length = 10, nullable = false)
 	private String state = State.ACTIVE.getState();
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "User_UserProfile", joinColumns = { @JoinColumn(name = "User_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "UserProfile_id") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();

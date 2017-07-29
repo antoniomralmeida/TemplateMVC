@@ -14,7 +14,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 	UserProfileDao dao;
 
 	@Autowired
-	public void setUserProfiledao(UserProfileDao dao) {
+	public void setUserdao(UserProfileDao dao) {
 		this.dao = dao;
 	}
 

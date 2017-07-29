@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -43,7 +42,9 @@ public class HibernateConfig {
 		dataSource.setUrl(env.getProperty("jdbc.url"));
 		dataSource.setUsername(env.getProperty("jdbc.username"));
 		dataSource.setPassword(env.getProperty("jdbc.password"));
-
+		Properties connectionProperties = new Properties();
+		connectionProperties.setProperty("serverTimezone", "Brazil/East");
+		dataSource.setConnectionProperties(connectionProperties);
 		return dataSource;
 	}
 

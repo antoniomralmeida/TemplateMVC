@@ -1,5 +1,5 @@
 <%@ include file="common/header.jspf"%>
-<h2>Editar usuário.</h2>
+<h2><spring:message code="editUser.message" /></h2>
 <hr align="center" width="100%" size="1" color=red>
 
 <div class="row">

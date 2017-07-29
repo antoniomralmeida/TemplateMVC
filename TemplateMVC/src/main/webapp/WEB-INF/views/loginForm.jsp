@@ -1,5 +1,5 @@
 <%@ include file="common/header.jspf"%>
-<h2>Efetuar login.</h2>
+<h2><spring:message code="login.message" /></h2>
 <hr align="center" width="100%" size="1" color=red>
 
 <div class="row">

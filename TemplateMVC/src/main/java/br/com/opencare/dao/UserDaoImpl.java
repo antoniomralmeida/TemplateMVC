@@ -11,7 +11,7 @@ import br.com.opencare.model.User;
 import br.com.opencare.model.UserProfile;
 import br.com.opencare.model.UserProfileType;
 
-@Repository
+@Repository("UserDao")
 public class UserDaoImpl implements UserDao {
 
 	@Autowired
