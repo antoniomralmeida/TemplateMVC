@@ -1,5 +1,10 @@
 package br.com.opencare.dao;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
@@ -21,19 +26,31 @@ public class UserDaoImpl implements UserDao {
 		return sessionFactory.getCurrentSession();
 	}
 
-	private UserProfile getSysadmin() {
+	private UserProfile getProfile(String type) {
 		TypedQuery<UserProfile> query = getSession().createQuery("select up from UserProfile up where type = :type");
-		query.setParameter("type", UserProfileType.SYSADMIN.getUserProfileType());
-		return query.getSingleResult();
+		query.setParameter("type", type);
+		if (query.getResultList().size() == 0)
+			return new UserProfile(type);
+		else
+			return query.getSingleResult();
 	}
 
 	@Override
 	public <S extends User> S save(S entity) {
 
+		List<String> types = new ArrayList<String>();
 		if (entity.getUserProfiles().size() == 0) {
 			if (count() == 0)
-				entity.getUserProfiles().add(getSysadmin());
+				types.add(UserProfileType.SYSADMIN.getUserProfileType());
 		}
+		for (UserProfile up : entity.getUserProfiles())
+			types.add(up.getType());
+
+		Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+		for (String type : types)
+			userProfiles.add(getProfile(type));
+		entity.setUserProfiles(userProfiles);
+
 		getSession().saveOrUpdate(entity);
 		return (S) getSession().get(User.class, entity.getId());
 	}
@@ -60,15 +77,6 @@ public class UserDaoImpl implements UserDao {
 		return query.getResultList();
 	}
 
-	/*
-	 * @Override public User login(String email, String pwd) { TypedQuery<User>
-	 * query = getSession().
-	 * createQuery("select u from User u where email = :email and pwd = :pwd");
-	 * query.setParameter("email", email); query.setParameter("pwd", pwd);
-	 * 
-	 * if (query.getResultList().size() == 0) return null; else return
-	 * query.getSingleResult(); }
-	 */
 	@Override
 	public long count() {
 		return getSession().createQuery("select count(1) from  User", Long.class).getSingleResult();

@@ -17,6 +17,7 @@
 				</div>
 				<form:input type="hidden" path="id" id="id" />
 				<form:input type="hidden" path="timestamp" id="timestamp" />
+				<form:input type="hidden" path="pwd" id="pwd" />
 
 				<div class="form-group">
 					<form:label path="name" class="col-md-2 control-label" for="name">Nome</form:label>
@@ -38,20 +39,10 @@
 				</div>
 
 				<div class="form-group">
-					<form:label path="pwd" class="col-md-2 control-label">senha</form:label>
-					<div class="col-md-10">
-						<form:input path="pwd" type="password" class="form-control"
-							required="required" />
-					</div>
-					<form:errors path="pwd"
-						cssClass="field-validation-valid text-danger" />
-				</div>
-
-				<div class="form-group">
 					<form:label path="userProfiles" class="col-md-2 control-label">Profile</form:label>
 					<div class="col-md-10">
 						<form:select path="userProfiles" items="${roles}" multiple="true"
-							itemValue="id" itemLabel="type" class="form-control input-sm" />
+							itemValue="type" itemLabel="type" class="form-control input-sm" />
 					</div>
 					<form:errors path="userProfiles"
 						cssClass="field-validation-valid text-danger" />

@@ -44,6 +44,7 @@ public class HibernateConfig {
 		dataSource.setPassword(env.getProperty("jdbc.password"));
 		Properties connectionProperties = new Properties();
 		connectionProperties.setProperty("serverTimezone", "Brazil/East");
+		connectionProperties.setProperty("useSSL", "false");
 		dataSource.setConnectionProperties(connectionProperties);
 		return dataSource;
 	}
