@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().antMatchers("/", "/user/**", "/login/**", "/webjars/**", "/resources/**").permitAll()
 				.and().formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username")
-				.passwordParameter("password").and().logout().logoutSuccessUrl("/").and().csrf().and()
-				.exceptionHandling().accessDeniedPage("/accessdenied");
+				.passwordParameter("password").and().logout().logoutSuccessUrl("/home").and().csrf().and()
+				.exceptionHandling().accessDeniedPage("/error");
 	}
 }

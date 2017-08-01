@@ -31,14 +31,17 @@ public class LoginController {
 
 		userProfileService.setupUserProfiles();
 		ModelAndView model = new ModelAndView();
+		model.setViewName("loginForm");
+
 		if (error != null) {
 			model.addObject("error", "Invalid username and password!");
 		}
 
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
+			model.setViewName("splash");
 		}
-		model.setViewName("loginForm");
+
 		return model;
 	}
 
@@ -47,7 +50,6 @@ public class LoginController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
-			// request.getSession().removeAttribute("login");
 		}
 		return "redirect:/login?logout";// You can redirect wherever you want,
 										// but generally it's a good practice to
@@ -62,7 +64,6 @@ public class LoginController {
 			model.addObject("error", "Invalid username and password!");
 		}
 		model.addObject("msg", "You've been logged successfully.");
-		// request.getSession().setAttribute("login", getLogin());
 		model.setViewName("wellcome");
 		return model;
 	}

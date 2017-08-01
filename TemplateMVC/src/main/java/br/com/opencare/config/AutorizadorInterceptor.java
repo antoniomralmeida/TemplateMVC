@@ -16,19 +16,18 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String user = auth.getName(); // get logged in username
 
-		request.getSession().setAttribute("user", user);
-
 		if (!user.equals("anonymousUser")) {
 			return true;
 		}
 
 		String uri = request.getRequestURI();
-		if (uri.endsWith("/error") || uri.endsWith("/login") || uri.endsWith("/user/register")
-				|| uri.contains("/webjars/") || uri.contains("/resources/")) {
+		System.out.println(uri);
+		if (uri.endsWith("/home") || uri.endsWith("/splash") || uri.endsWith("/error") || uri.endsWith("/login")
+				|| uri.endsWith("/user/register") || uri.contains("/webjars/") || uri.contains("/resources/")) {
 			return true;
 		}
 
-		response.sendRedirect(request.getContextPath() + "/login");
+		response.sendRedirect(request.getContextPath() + "/home");
 		return false;
 	}
 }

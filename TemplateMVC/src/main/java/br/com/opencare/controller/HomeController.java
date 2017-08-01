@@ -11,10 +11,24 @@ import br.com.opencare.model.User;
 import br.com.opencare.service.UserService;
 
 @Controller
-public class WellcomeController {
+public class HomeController {
 
 	@Autowired
 	UserService userService;
+
+	@RequestMapping("/home")
+	public String splash(ModelMap model) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String user = auth.getName(); // get logged in username
+
+		System.out.println(user);
+
+		if (user.equals("anonymousUser"))
+			return "splash";
+		else
+			return "home";
+	}
 
 	@RequestMapping("/wellcome")
 	public String wellcome(ModelMap model) {
@@ -25,7 +39,6 @@ public class WellcomeController {
 
 		User user = userService.findByEmail(login);
 		model.addAttribute(user);
-		System.out.println(user.getName());
 		return "wellcome";
 	}
 
