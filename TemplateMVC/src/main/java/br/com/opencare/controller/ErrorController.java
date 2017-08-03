@@ -1,5 +1,7 @@
 package br.com.opencare.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -14,9 +16,22 @@ public class ErrorController {
 
 	private Log logger = LogFactory.getLog(ErrorController.class);
 
-	@RequestMapping(value = "/error", method = RequestMethod.POST)
-	public ModelAndView doPost(HttpServletRequest req, Exception ex) {
-		return doGet(req, ex);
+	// for 403 access denied page
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
+	public ModelAndView accesssDenied(Principal user) {
+
+		ModelAndView model = new ModelAndView();
+		String msg = "";
+		if (user != null) {
+			msg = "Hi " + user.getName() + ", you do not have permission to access this page!";
+		} else {
+			msg = "You do not have permission to access this page!";
+		}
+		logger.error(msg);
+
+		model.addObject("errorMsg", msg);
+		model.setViewName("home");
+		return model;
 	}
 
 	@RequestMapping(value = "/error", method = RequestMethod.GET)

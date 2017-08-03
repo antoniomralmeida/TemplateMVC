@@ -48,9 +48,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/", "/user/**", "/login/**", "/webjars/**", "/resources/**").permitAll()
-				.and().formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username")
+		http.authorizeRequests()
+				.antMatchers("/user/register", "/user/list", "/login/**", "/webjars/**", "/resources/**", "/error")
+				.permitAll().antMatchers("/user/edit").access("hasRole('ROLE_SYSADMIN')").and().formLogin()
+				.loginPage("/login").failureUrl("/login?error").usernameParameter("username")
 				.passwordParameter("password").and().logout().logoutSuccessUrl("/home").and().csrf().and()
-				.exceptionHandling().accessDeniedPage("/error");
+				.exceptionHandling().accessDeniedPage("/403");
 	}
 }
