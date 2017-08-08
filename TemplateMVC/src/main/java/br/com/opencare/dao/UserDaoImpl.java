@@ -39,13 +39,14 @@ public class UserDaoImpl implements UserDao {
 	public <S extends User> S save(S entity) {
 
 		List<String> types = new ArrayList<String>();
+		//Regra de Negócio. Primeiro usuário a se registrar é SYSADMIN
 		if (entity.getUserProfiles().size() == 0) {
 			if (count() == 0)
 				types.add(UserProfileType.SYSADMIN.getUserProfileType());
 		}
 		for (UserProfile up : entity.getUserProfiles())
 			types.add(up.getType());
-
+		//Por algum motivo que não identificamos o Spring não está buscando o registro já existente no relacionamento NxN
 		Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 		for (String type : types)
 			userProfiles.add(getProfile(type));
@@ -56,7 +57,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User findOne(Long id) {
+	public User find(Long id) {
 		return getSession().get(User.class, id);
 	}
 

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import br.com.opencare.model.User;
 import br.com.opencare.model.UserProfile;
 import br.com.opencare.model.UserProfileType;
 
@@ -27,7 +28,7 @@ public class UserProfileDaoImpl implements UserProfileDao {
 	}
 
 	@Override
-	public UserProfile findOne(Long id) {
+	public UserProfile find(Long id) {
 		return getSession().get(UserProfile.class, id);
 	}
 

@@ -6,7 +6,7 @@ public interface CrudDAO<T, ID extends Serializable> {
 
 	public <S extends T> S save(S entity);
 
-	public T findOne(ID id);
+	public T find(ID id);
 
 	public Iterable<T> findAll();
 

@@ -24,8 +24,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	@Override
-	public UserProfile findOne(Long id) {
-		return dao.findOne(id);
+	public UserProfile find(Long id) {
+		return dao.find(id);
 	}
 
 	@Override
