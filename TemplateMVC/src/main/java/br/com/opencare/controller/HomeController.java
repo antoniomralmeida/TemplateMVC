@@ -22,8 +22,6 @@ public class HomeController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String user = auth.getName(); // get logged in username
 
-		System.out.println(user);
-
 		if (user.equals("anonymousUser"))
 			return "splash";
 		else

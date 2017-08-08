@@ -11,16 +11,15 @@
 			<form:form class="form-horizontal" method="post" action="${post_url}"
 				modelAttribute="user" role="form">
 				<h4>Alterar dados do usuário.</h4>
+				<form:hidden path="id" id="id" />
+				<form:hidden path="timestamp" id="timestamp" />
+
 
 				<div class="validation-summary-errors text-danger">
 					<ul>
 						<li style="display: none"><form:errors path="*" /></li>
 					</ul>
 				</div>
-				<form:input type="hidden" path="id" id="id" />
-				<form:input type="hidden" path="timestamp" id="timestamp" />
-				<form:input type="hidden" path="pwd" id="pwd" />
-
 				<div class="form-group">
 					<form:label path="name" class="col-md-2 control-label" for="name">Nome</form:label>
 					<div class="col-md-10">
@@ -68,7 +67,6 @@
 						<input type="submit" class="btn btn-default btn-main"
 							value="Confirmar"> <a class="btn btn-default"
 							href="<c:url value="/wellcome"/>">Cancelar</a>
-
 					</div>
 				</div>
 			</form:form>

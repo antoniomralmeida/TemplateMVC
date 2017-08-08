@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -56,12 +57,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	/*
-	 * @Bean(name = "simpleMappingExceptionResolver") public
-	 * SimpleMappingExceptionResolver createSimpleMappingExceptionResolver() {
-	 * SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
-	 * r.setDefaultErrorView("errorPage"); // No default return r; }
-	 */
 	@Bean
 	public SessionLocaleResolver localeResolver() {
 		SessionLocaleResolver locale = new SessionLocaleResolver();

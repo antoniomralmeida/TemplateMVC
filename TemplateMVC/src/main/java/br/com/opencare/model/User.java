@@ -36,7 +36,6 @@ public class User {
 	@NotEmpty
 	private String email;
 	@Column(length = 60, nullable = false)
-	@NotEmpty
 	@Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Min 8, upper, lower, digit and special char.")
 	private String pwd;
 

@@ -86,7 +86,6 @@ public class UserDaoImpl implements UserDao {
 	public User findByEmail(String email) {
 		TypedQuery<User> query = getSession().createQuery("select u from User u where email = :email");
 		query.setParameter("email", email);
-
 		if (query.getResultList().size() == 0)
 			return null;
 		else

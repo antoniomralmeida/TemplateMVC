@@ -21,7 +21,6 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		String uri = request.getRequestURI();
-		System.out.println(uri);
 		if (uri.endsWith("/home") || uri.endsWith("/splash") || uri.endsWith("/error") || uri.endsWith("/login")
 				|| uri.endsWith("/user/register") || uri.contains("/webjars/") || uri.contains("/resources/")) {
 			return true;

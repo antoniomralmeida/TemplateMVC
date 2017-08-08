@@ -6,6 +6,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,8 @@ public class UserController {
 
 	@Autowired
 	UserProfileService userProfileService;
+	
+	private Log logger = LogFactory.getLog(ErrorController.class);
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -54,13 +58,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "register", method = RequestMethod.POST)
-	public ModelAndView sendUserForm(@Valid @ModelAttribute("user") User user, BindingResult result,
-			HttpServletRequest request) {
+	public ModelAndView sendUserForm(@Valid @ModelAttribute("user") User user, BindingResult result, HttpServletRequest req) {
 		if (result.hasErrors()) {
+			logger.error("Request: " + req.getRequestURL() + " raised " + result.getAllErrors().toString());
 			ModelAndView model = new ModelAndView("registerForm");
 			return model;
 		} else {
-			user.setPwd(passwordEncoder.encode(user.getPwd()));
+			user.setPwd(passwordEncoder.encode(user.getPwd())); 
 			userService.save(user);
 			ModelAndView model = new ModelAndView("loginForm");
 			model.addObject("username", user.getEmail());
@@ -76,14 +80,18 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "edit", method = RequestMethod.POST)
-	public ModelAndView sendUserEditForm(@Valid @ModelAttribute("user") User user, BindingResult result,
-			HttpServletRequest request) {
+	public ModelAndView sendUserEditForm(@Valid @ModelAttribute("user") User user, BindingResult result, HttpServletRequest req) {
 		if (result.hasErrors()) {
+			logger.error("Request: " + req.getRequestURL() + " raised " + result.getAllErrors().toString());
+			
 			ModelAndView model = new ModelAndView("editUserForm");
 			return model;
 		} else {
+			User u = userService.findByEmail(user.getEmail());
+			user.setPwd(u.getPwd()); //o campo pwd foi omitido do formulário por questão de segurança
 			userService.save(user);
-			ModelAndView model = new ModelAndView("editUserForm");
+			ModelAndView model = new ModelAndView("home");
+			model.addObject("message", "Concluído!");
 			return model;
 		}
 	}
