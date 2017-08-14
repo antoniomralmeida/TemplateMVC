@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
@@ -16,7 +16,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Template MVC</title>
+<title><spring:message code="app.message" /></title>
 
 <!-- Bootstrap Core CSS -->
 <link href="<c:url value="/webjars/bootstrap/3.3.6/css/bootstrap.css"/>"
@@ -57,15 +57,17 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand topnav" href="#">Template MVC</a>
+				<a class="navbar-brand topnav" href="#"><spring:message code="app.message" /></a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#about">Sobre</a></li>
-					<li><a href="/user/register">Registrar</a></li>
+					<li><a href="#about"><spring:message code="about.message" /></a></li>
+					<li><a href="/user/register"><spring:message code="register.message" /></a></li>
 					<li><a href="/login">Login</a></li>
+					<li><a href="<c:url value="/?locale=en"/>" >English</a></li>
+					<li><a href="<c:url value="/?locale=pt_BR"/>">Português</a></li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -82,8 +84,8 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="intro-message">
-						<h1>Template MVC</h1>
-						<h3>Um Template de Aplicação MVC5</h3>
+						<h1><spring:message code="app.message" /></h1>
+						<h3><spring:message code="resume.message" /></h3>
 						<hr class="intro-divider">
 					</div>
 				</div>

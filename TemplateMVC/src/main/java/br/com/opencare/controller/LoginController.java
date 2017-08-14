@@ -67,5 +67,4 @@ public class LoginController {
 		model.setViewName("wellcome");
 		return model;
 	}
-
 }

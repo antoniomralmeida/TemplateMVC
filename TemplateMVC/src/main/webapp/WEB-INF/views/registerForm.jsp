@@ -1,55 +1,46 @@
 <%@ include file="common/header.jspf"%>
-<h2><spring:message code="newUser.message" /></h2>
+<h2>
+	<spring:message code="newUser.message" />
+</h2>
 <hr align="center" width="100%" size="1" color=red>
 
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-lg-12">
 		<section id="registerForm">
 			<c:url var="post_url" value="/user/register" />
-			<form:form class="form-horizontal" method="post" action="${post_url}"
-				modelAttribute="user" role="form">
-				<h4>Informe os dados do novo usuário.</h4>
-
+			<form:form method="post" action="${post_url}" modelAttribute="user"
+				role="form">
 				<div class="validation-summary-errors text-danger">
 					<ul>
 						<li style="display: none"><form:errors path="*" /></li>
 					</ul>
 				</div>
 				<div class="form-group">
-					<form:label path="name" class="col-md-2 control-label" for="Name">Nome</form:label>
-					<div class="col-md-10">
-						<form:input path="name" class="form-control" required="required" />
-					</div>
+					<form:input path="name" placeholder="Nome" class="form-control"
+						required="required" />
 					<form:errors path="name"
 						cssClass="field-validation-valid text-danger" />
 				</div>
 
 				<div class="form-group">
-					<form:label path="email" class="col-md-2 control-label" for="Email">Email</form:label>
-					<div class="col-md-10">
-						<form:input path="email" class="form-control" required="required" />
-					</div>
+					<form:input path="email" placeholder="e-mail" class="form-control"
+						required="required" />
 					<form:errors path="email"
 						cssClass="field-validation-valid text-danger" />
 				</div>
 
 				<div class="form-group">
-					<form:label path="pwd" class="col-md-2 control-label">senha</form:label>
-					<div class="col-md-10">
-						<form:input path="pwd" type="password" class="form-control"
-							required="required" />
-					</div>
+					<form:input path="pwd" placeholder="Password" type="password"
+						class="form-control" required="required" />
 					<form:errors path="pwd"
 						cssClass="field-validation-valid text-danger" />
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-10">
-						<input type="submit" class="btn btn-default btn-main"
-							value="Confirmar"> <a class="btn btn-default"
-							href="<c:url value="/wellcome"/>">Cancelar</a>
-
-					</div>
+					<input type="submit" class="btn btn-default btn-main"
+						value="<spring:message code="confirm.message" />"> <a
+						class="btn btn-default" href="<c:url value="/wellcome"/>"><spring:message
+							code="cancel.message" /></a>
 				</div>
 			</form:form>
 		</section>

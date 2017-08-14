@@ -16,6 +16,8 @@ public class HomeController {
 	@Autowired
 	UserService userService;
 
+	String language;
+
 	@RequestMapping("/home")
 	public String splash(ModelMap model) {
 
@@ -39,5 +41,4 @@ public class HomeController {
 		model.addAttribute(user);
 		return "wellcome";
 	}
-
 }

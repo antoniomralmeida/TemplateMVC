@@ -8,9 +8,9 @@
 	<div class="col-md-8">
 		<section id="registerForm">
 			<c:url var="post_url" value="/user/edit" />
-			<form:form class="form-horizontal" method="post" action="${post_url}"
+			<form:form method="post" action="${post_url}"
 				modelAttribute="user" role="form">
-				<h4>Alterar dados do usuário.</h4>
+
 				<form:hidden path="id" id="id" />
 				<form:hidden path="timestamp" id="timestamp" />
 
@@ -21,53 +21,43 @@
 					</ul>
 				</div>
 				<div class="form-group">
-					<form:label path="name" class="col-md-2 control-label" for="name">Nome</form:label>
-					<div class="col-md-10">
-						<form:input path="name" class="form-control" required="required" />
-					</div>
+						<form:input path="name" placeholder="Nome" class="form-control"
+							required="required" />
 					<form:errors path="name"
 						cssClass="field-validation-valid text-danger" />
 				</div>
 
 				<div class="form-group">
-					<form:label path="email" class="col-md-2 control-label" for="Email">Email</form:label>
-					<div class="col-md-10">
-						<form:input path="email" class="form-control" required="required"
-							readonly="true" />
-					</div>
+						<form:input path="email" placeholder="e-mail" class="form-control"
+							required="required" readonly="true" />
 					<form:errors path="email"
 						cssClass="field-validation-valid text-danger" />
 				</div>
 
 				<div class="form-group">
-					<form:label path="userProfiles" class="col-md-2 control-label">Profile</form:label>
-					<div class="col-md-10">
-						<form:select path="userProfiles" items="${roles}" multiple="true"
-							itemValue="type" itemLabel="type" class="form-control input-sm" />
-					</div>
+					<form:label path="userProfiles">Profile</form:label>
+						<form:select path="userProfiles" multiple="true" items="${roles}"
+							itemValue="type" itemLabel="type" class="form-control input-sm">
+						</form:select>
 					<form:errors path="userProfiles"
 						cssClass="field-validation-valid text-danger" />
 				</div>
 
-
 				<div class="form-group">
-					<form:label path="state" class="col-md-2 control-label">Estado</form:label>
-					<div class="col-md-10">
-						<form:select path="state">
-							<form:option value="NONE"> --SELECT--</form:option>
-							<form:options items="${states}"></form:options>
-						</form:select>
-					</div>
+					<form:label path="state">Status</form:label>
+
+					<form:select path="state">
+						<form:options items="${states}"></form:options>
+					</form:select>
 					<form:errors path="state"
 						cssClass="field-validation-valid text-danger" />
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-offset-2 col-md-10">
 						<input type="submit" class="btn btn-default btn-main"
 							value="Confirmar"> <a class="btn btn-default"
 							href="<c:url value="/wellcome"/>">Cancelar</a>
-					</div>
+				
 				</div>
 			</form:form>
 		</section>
