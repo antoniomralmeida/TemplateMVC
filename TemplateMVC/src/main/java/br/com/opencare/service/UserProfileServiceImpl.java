@@ -19,13 +19,13 @@ public class UserProfileServiceImpl implements UserProfileService {
 	}
 
 	@Override
-	public <S extends UserProfile> S save(S entity) {
-		return dao.save(entity);
+	public void setupUserProfiles() {
+		dao.setupUserProfiles();
 	}
 
 	@Override
-	public UserProfile find(Long id) {
-		return dao.find(id);
+	public <S extends UserProfile> S save(S entity) {
+		return dao.save(entity);
 	}
 
 	@Override
@@ -37,20 +37,4 @@ public class UserProfileServiceImpl implements UserProfileService {
 	public long count() {
 		return dao.count();
 	}
-
-	@Override
-	public void delete(Long id) {
-		dao.delete(id);
-	}
-
-	@Override
-	public void delete(UserProfile entity) {
-		dao.delete(entity);
-	}
-
-	@Override
-	public void setupUserProfiles() {
-		dao.setupUserProfiles();
-	}
-
 }

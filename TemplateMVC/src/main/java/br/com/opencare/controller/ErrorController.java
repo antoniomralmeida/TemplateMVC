@@ -1,11 +1,11 @@
 package br.com.opencare.controller;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,16 +17,17 @@ public class ErrorController {
 	private Log logger = LogFactory.getLog(ErrorController.class);
 
 	// for 403 access denied page
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public ModelAndView accesssDenied(Principal user) {
+	@RequestMapping(value = "/403")
+	public ModelAndView accesssDenied() {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String user = auth.getName(); // get logged in username
+
+		String per = auth.getAuthorities().toString();
 
 		ModelAndView model = new ModelAndView();
-		String msg = "";
-		if (user != null) {
-			msg = "Hi " + user.getName() + ", you do not have permission to access this page!";
-		} else {
-			msg = "You do not have permission to access this page!";
-		}
+		String msg = "Hi " + user + ", you do not have permission to access this page!" + per;
+
 		logger.error(msg);
 
 		model.addObject("errorMsg", msg);

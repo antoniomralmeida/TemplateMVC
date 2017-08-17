@@ -5,7 +5,7 @@
 <hr align="center" width="100%" size="1" color=red>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-md-6">
 		<section id="registerForm">
 			<c:url var="post_url" value="/user/register" />
 			<form:form method="post" action="${post_url}" modelAttribute="user"

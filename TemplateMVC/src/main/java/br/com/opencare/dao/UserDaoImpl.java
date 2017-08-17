@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
@@ -37,16 +38,16 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public <S extends User> S save(S entity) {
-
 		List<String> types = new ArrayList<String>();
-		//Regra de Negócio. Primeiro usuário a se registrar é SYSADMIN
+		// Regra de Negócio. Primeiro usuário a se registrar é SYSADMIN
 		if (entity.getUserProfiles().size() == 0) {
 			if (count() == 0)
 				types.add(UserProfileType.SYSADMIN.getUserProfileType());
 		}
 		for (UserProfile up : entity.getUserProfiles())
 			types.add(up.getType());
-		//Por algum motivo que não identificamos o Spring não está buscando o registro já existente no relacionamento NxN
+		// Por algum motivo que não identificamos o Spring não está buscando o
+		// registro já existente no relacionamento NxN
 		Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 		for (String type : types)
 			userProfiles.add(getProfile(type));
@@ -92,4 +93,21 @@ public class UserDaoImpl implements UserDao {
 		else
 			return query.getSingleResult();
 	}
+
+	@Override
+	public long countByCriteria(String criteria) {
+		Query query = getSession().createNamedQuery("User.criteria");
+		query.setParameter("criteria", "%" + criteria + "%");
+		return query.getResultList().size();
+	}
+
+	@Override
+	public Iterable<User> findByCriteria(String criteria, int page) {
+		Query query = getSession().createNamedQuery("User.criteria");
+		query.setParameter("criteria", "%" + criteria + "%");
+		query.setFirstResult((page - 1) * PAGINING.pageSize);
+		query.setMaxResults(PAGINING.pageSize);
+		return query.getResultList();
+	}
+
 }

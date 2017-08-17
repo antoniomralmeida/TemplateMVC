@@ -5,7 +5,7 @@
 <hr align="center" width="100%" size="1" color=red>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-md-4">
 		<section id="loginForm">
 			<c:url var="post_url" value="/login" />
 			<form:form method="post" action="${post_url}"

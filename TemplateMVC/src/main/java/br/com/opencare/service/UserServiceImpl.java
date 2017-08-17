@@ -53,4 +53,14 @@ public class UserServiceImpl implements UserService {
 		return dao.findByEmail(email);
 	}
 
+	@Override
+	public long countByCriteria(String criteria) {
+		return dao.countByCriteria(criteria);
+	}
+
+	@Override
+	public Iterable<User> findByCriteria(String criteria, int page) {
+		return dao.findByCriteria(criteria, page);
+	}
+
 }

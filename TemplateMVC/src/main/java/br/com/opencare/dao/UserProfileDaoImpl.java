@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import br.com.opencare.model.User;
 import br.com.opencare.model.UserProfile;
 import br.com.opencare.model.UserProfileType;
 
@@ -28,11 +27,6 @@ public class UserProfileDaoImpl implements UserProfileDao {
 	}
 
 	@Override
-	public UserProfile find(Long id) {
-		return getSession().get(UserProfile.class, id);
-	}
-
-	@Override
 	public Iterable<UserProfile> findAll() {
 		TypedQuery<UserProfile> query = getSession().createQuery("select up from UserProfile up");
 		return query.getResultList();
@@ -41,17 +35,6 @@ public class UserProfileDaoImpl implements UserProfileDao {
 	@Override
 	public long count() {
 		return getSession().createQuery("select count(1) from  UserProfile", Long.class).getSingleResult();
-	}
-
-	@Override
-	public void delete(Long id) {
-		UserProfile up = getSession().get(UserProfile.class, id);
-		getSession().delete(up);
-	}
-
-	@Override
-	public void delete(UserProfile entity) {
-		getSession().delete(entity);
 	}
 
 	@Override
