@@ -35,7 +35,7 @@ public class ErrorController {
 		return model;
 	}
 
-	@RequestMapping(value = "/error", method = RequestMethod.GET)
+	@RequestMapping(value = "/error")
 	public ModelAndView doGet(HttpServletRequest req, Exception ex) {
 		logger.error("Request: " + req.getRequestURL() + " raised " + ex);
 
