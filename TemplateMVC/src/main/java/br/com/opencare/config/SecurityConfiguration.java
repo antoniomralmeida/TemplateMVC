@@ -49,9 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests().antMatchers("/user/register", "/webjars/**", "/resources/**", "/error", "/rest")
-				.permitAll().antMatchers("/user/edit", "/user/list/").access("hasRole('ROLE_SYSADMIN')").and()
-				.formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username")
-				.passwordParameter("password").and().logout().logoutSuccessUrl("/home").and().csrf().and()
-				.exceptionHandling().accessDeniedPage("/403");
+				.permitAll().and().authorizeRequests().antMatchers("/user/edit/**", "/user/list/**")
+				.access("hasRole('ROLE_SYSADMIN')").and().authorizeRequests().and().formLogin().loginPage("/login")
+				.failureUrl("/login?error").usernameParameter("username").passwordParameter("password").and().logout()
+				.logoutSuccessUrl("/home").and().csrf().and().exceptionHandling().accessDeniedPage("/403");
 	}
 }
