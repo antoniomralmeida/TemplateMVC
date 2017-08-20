@@ -66,8 +66,8 @@
 					<li><a href="#about"><spring:message code="about.message" /></a></li>
 					<li><a href="/user/register"><spring:message code="register.message" /></a></li>
 					<li><a href="/login">Login</a></li>
-					<li><a href="<c:url value="/?locale=en"/>" >English</a></li>
-					<li><a href="<c:url value="/?locale=pt_BR"/>">Português</a></li>
+					<li><a href="<c:url value="/home?locale=en"/>" >English</a></li>
+					<li><a href="<c:url value="/home?locale=pt_BR"/>">Português</a></li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->

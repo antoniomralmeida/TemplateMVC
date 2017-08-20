@@ -1,7 +1,9 @@
 package br.com.opencare.config;
 
+import java.awt.List;
 import java.util.Locale;
 
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -72,4 +74,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return change;
 	}
 
+	/*@Bean
+	public MethodInvokingFactoryBean log4jInitialization(){
+		MethodInvokingFactoryBean log4j = new MethodInvokingFactoryBean();
+		log4j.setTargetClass(org.springframework.util.Log4jConfigurer.class);
+		log4j.setTargetMethod("initLogging");
+		String[] args = new String[] { "classpath:resources/log4j.properties"};
+		log4j.setArguments(args);		
+		return log4j;
+	}
+	*/
 }

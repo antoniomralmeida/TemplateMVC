@@ -1,9 +1,12 @@
 package br.com.opencare.controller;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -25,46 +28,28 @@ public class LoginController {
 	@Autowired
 	UserProfileService userProfileService;
 
+	@Autowired
+	private MessageSource messageSource;
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView loginForm(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout) {
+	public ModelAndView loginForm(HttpServletRequest request, HttpServletResponse response,@RequestParam(value = "error", required = false) String error,
+			@RequestParam(value = "logout", required = false) String logout, Locale loc) {
 
 		userProfileService.setupUserProfiles();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("loginForm");
 
 		if (error != null) {
-			model.addObject("error", "Invalid username and password!");
-		}
+			model.addObject("error", messageSource.getMessage("loginError.message", null, loc));
+		} else
 
 		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			if (auth != null) {
+				new SecurityContextLogoutHandler().logout(request, response, auth);
+			}
 			model.setViewName("splash");
 		}
-
-		return model;
-	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) {
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-		return "redirect:/login?logout";// You can redirect wherever you want,
-										// but generally it's a good practice to
-										// show login screen again.
-	}
-
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
-
-		ModelAndView model = new ModelAndView();
-		if (error != null) {
-			model.addObject("error", "Invalid username and password!");
-		}
-		model.addObject("msg", "You've been logged successfully.");
-		model.setViewName("wellcome");
 		return model;
 	}
 }

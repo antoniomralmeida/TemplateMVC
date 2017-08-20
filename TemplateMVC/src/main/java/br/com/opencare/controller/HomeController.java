@@ -1,5 +1,6 @@
 package br.com.opencare.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,10 +17,15 @@ public class HomeController {
 	@Autowired
 	UserService userService;
 
-	String language;
+	private static final Logger logger = Logger.getLogger(HomeController.class);
 
 	@RequestMapping("/home")
 	public String splash(ModelMap model) {
+
+		// logs debug message
+		if (logger.isDebugEnabled()) {
+			logger.debug("getWelcome is executed!");
+		}
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String user = auth.getName(); // get logged in username

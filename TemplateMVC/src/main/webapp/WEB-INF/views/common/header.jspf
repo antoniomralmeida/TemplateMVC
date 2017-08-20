@@ -28,13 +28,13 @@
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/"><strong><spring:message
+				<a class="navbar-brand" href="/home"><strong><spring:message
 							code="app.message" /></strong></a> 
 			</div>
 
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="<c:url value="/"/>"><spring:message
+					<li><a href="<c:url value="/home"/>"><spring:message
 								code="home.message" /></a></li>
 					<c:if test="${currentUser.name != 'anonymousUser' }">
 						<li class=" dropdown"><a href="#" class="dropdown-toggle "
@@ -58,7 +58,7 @@
 						<li><a
 							href="<c:url value="/user/edit?login=${currentUser.name}"/>"
 							id="detaisLink">${currentUser.name}</a></li>
-						<li><a href="<c:url value="/logout"/>" id="loginLink">Logout</a></li>
+						<li><a href="<c:url value="/login?logout"/>" id="loginLink">Logout</a></li>
 					</c:if>
 
 					<li><a href="<c:url value=""/>"><spring:message
