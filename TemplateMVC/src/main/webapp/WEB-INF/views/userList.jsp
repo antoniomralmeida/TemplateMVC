@@ -10,12 +10,12 @@
 					aria-label="Fechar">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+				<h4 class="modal-title" id="modalLabel"><spring:message code="titleDel.message" /></h4>
 			</div>
-			<div class="modal-body">Deseja realmente excluir este item?</div>
+			<div class="modal-body"><spring:message code="confirmDel.message" /></div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary"
-					onclick="location.href='/user/delete/';">Sim</button>
+					onclick="deleteUser('<c:url value=""/>/user/delete/' + id_global);" data-dismiss="modal">Sim</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
 			</div>
 		</div>
@@ -57,17 +57,17 @@
 </div>
 
 <c:if test="${not empty userList}">
+	
 	<div id="list" class="row">
-
 		<div class="table-responsive col-md-12">
 
 			<table class="table table-striped" cellspacing="0" cellpadding="0">
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Header 1</th>
-						<th>Header 2</th>
-						<th>Header 3</th>
+						<th>Nome</th>
+						<th>e-mail</th>
+						<th>Última atualização</th>
 						<th class="actions">Ações</th>
 					</tr>
 				</thead>
@@ -76,13 +76,13 @@
 						<tr>
 							<td>${ user.id}</td>
 							<td>${ user.name}</td>
-							<td>Jes</td>
-							<td>01/01/2015</td>
+							<td>${ user.email}</td>
+							<td>${ user.timestamp}</td>
 							<td class="actions"><a class="btn btn-success btn-xs"
 								href="view.html">Visualizar</a> <a
-								class="btn btn-warning btn-xs" href="edit.html">Editar</a> <a
-								class="btn btn-danger btn-xs" href="#" data-toggle="modal"
-								data-target="#${ user.id}">Excluir</a></td>
+								class="btn btn-warning btn-xs" href="edit.html">Editar</a> 
+								<button type="button" class="btn btn-danger btn-xs" data-toggle="modal"
+								data-target="#delete-modal" onclick="id_global=${user.id};location.href='#';">Excluir</button></td>
 						</tr>
 					</c:forEach>
 
@@ -90,6 +90,7 @@
 			</table>
 		</div>
 	</div>
+	<div id="msg" class="vol-md-1 validation-summary-errors text-danger"> </div>
 	<!-- /#list -->
 
 	<div id="bottom" class="row">
@@ -101,7 +102,7 @@
 						<li class="disabled"><a>Anterior</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="/user/list/${page-1}">Anterior</a></li>
+						<li><a href="/user/list/${page-1}?criteria=${criteria.criteria}">Anterior</a></li>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach var="i" begin="1" end="${pages}">
@@ -110,8 +111,7 @@
 							<li class="disabled"><a>${i }</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="/user/list/${i}">${i }</a></li>
-
+							<li><a href="/user/list/${i}?criteria=${criteria.criteria}">${i }</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -120,15 +120,15 @@
 						<li class="disabled"><a>Próximo</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="/user/list/${page+1}">Próximo</a></li>
+						<li><a href="/user/list/${page+1}?criteria=${criteria.criteria}">Próximo</a></li>
 					</c:otherwise>
 				</c:choose>
+				
 			</ul>
 			<!-- /.pagination -->
 		</div>
 	</div>
 	<!-- /#bottom -->
-
 </c:if>
 
 

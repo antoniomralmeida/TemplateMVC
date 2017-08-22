@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,7 +71,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "list/{page}", method = RequestMethod.GET)
-	public ModelAndView findUserForm(@RequestParam("criteria") String criteria, @PathVariable("page") int page) {
+	public ModelAndView findUserForm(@PathVariable("page") int page, @RequestParam("criteria") String criteria) {
 
 		ModelAndView model = new ModelAndView("userList");
 
@@ -79,6 +80,8 @@ public class UserController {
 		model.addObject("userList", userService.findByCriteria(criteria, page));
 		model.addObject("pages", PAGINING.pages(size));
 		model.addObject("page", page);
+		model.addObject("criteria", new Criteria(criteria));
+
 		return model;
 	}
 
@@ -99,6 +102,16 @@ public class UserController {
 			return model;
 		} else {
 			user.setPwd(passwordEncoder.encode(user.getPwd()));
+
+			/*for (int i = 100; i < 120; i++) {
+				User u = new User();
+				u.setName(user.getName() + i);
+				u.setEmail(user.getEmail() + i);
+				u.setPwd(user.getPwd());
+				System.out.println(u);
+				userService.save(u);
+			}
+*/
 			userService.save(user);
 			ModelAndView model = new ModelAndView("loginForm");
 			model.addObject("username", user.getEmail());
@@ -130,6 +143,17 @@ public class UserController {
 			model.addObject("message", messageSource.getMessage("done.message", null, loc));
 			return model;
 		}
+	}
+
+	@RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
+	public String sendUserEditForm(@PathVariable("id") long id, ModelMap model) {
+		if (userService.find(id) == null)
+			model.addAttribute("msg", "Not Found[" + id + "]!");
+		else {
+			userService.delete(id);
+			model.addAttribute("msg", "Deleted ID[" + id + "]!");
+		}
+		return "empty";
 	}
 
 	/**

@@ -3,6 +3,13 @@ package br.com.opencare.model;
 public class Criteria {
 	private String criteria;
 
+	public Criteria(String criteria) {
+		this.criteria = criteria;
+	}
+
+	public Criteria() {
+	}
+
 	/**
 	 * @return the criteria
 	 */

@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ErrorController {
 
-	private Log logger = LogFactory.getLog(ErrorController.class);
+	private Log logger = LogFactory.getLog(HomeController.class);
 
 	// for 403 access denied page
 	@RequestMapping(value = "/403")
@@ -37,11 +37,16 @@ public class ErrorController {
 
 	@RequestMapping(value = "/error")
 	public ModelAndView doGet(HttpServletRequest req, Exception ex) {
-		logger.error("Request: " + req.getRequestURL() + " raised " + ex);
+		
+		int httpError =0;
+		String httpMsg = "Unknown error";
+		String uri = "Unknown uri";
 
-		int httpError = (int) req.getAttribute("javax.servlet.error.status_code");
-
-		String httpMsg = "";
+		if (req != null) {
+			logger.error("Request: " + req.getRequestURL() + " raised " + ex==null?"Unknown exception":ex);
+			httpError = (int) req.getAttribute("javax.servlet.error.status_code");
+			uri = (String)req.getAttribute("javax.servlet.error.request_uri");
+		}
 		switch (httpError) {
 		case 400:
 			httpMsg = "This response means that server could not understand the request due to invalid syntax.";
@@ -58,12 +63,10 @@ public class ErrorController {
 		case 409:
 			httpMsg = "This response would be sent when a request conflict with current state of server.";
 			break;
-		default:
-			httpMsg = "Unknown error";
 		}
 
 		String errorMsg = "Http error code: " + httpError + ". " + httpMsg + " in "
-				+ req.getAttribute("javax.servlet.error.request_uri");
+				+ uri;
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("errorMsg", errorMsg);
 		mav.addObject("exception", ex);
