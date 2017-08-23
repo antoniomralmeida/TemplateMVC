@@ -1,5 +1,5 @@
 <%@ include file="common/header.jspf"%>
-
+<c:url var="delete_url" value="/user/delete/" />
 <!-- Modal -->
 <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
 	aria-labelledby="modalLabel">
@@ -10,12 +10,17 @@
 					aria-label="Fechar">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="modalLabel"><spring:message code="titleDel.message" /></h4>
+				<h4 class="modal-title" id="modalLabel">
+					<spring:message code="titleDel.message" />
+				</h4>
 			</div>
-			<div class="modal-body"><spring:message code="confirmDel.message" /></div>
+			<div class="modal-body">
+				<spring:message code="confirmDel.message" />
+			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary"
-					onclick="deleteUser('<c:url value=""/>/user/delete/' + id_global);" data-dismiss="modal">Sim</button>
+					onclick="deleteUser('${delete_url}' + id_global);"
+					data-dismiss="modal">Sim</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
 			</div>
 		</div>
@@ -52,12 +57,13 @@
 </div>
 
 <div class="col-md-3">
-	<a href="/user/register" class="btn btn-primary pull-right h2"><spring:message
+	<a href="<c:url value="/user/register"/>"
+		class="btn btn-primary pull-right h2"><spring:message
 			code="newUser.message" /></a>
 </div>
 
 <c:if test="${not empty userList}">
-	
+
 	<div id="list" class="row">
 		<div class="table-responsive col-md-12">
 
@@ -80,9 +86,10 @@
 							<td>${ user.timestamp}</td>
 							<td class="actions"><a class="btn btn-success btn-xs"
 								href="view.html">Visualizar</a> <a
-								class="btn btn-warning btn-xs" href="edit.html">Editar</a> 
-								<button type="button" class="btn btn-danger btn-xs" data-toggle="modal"
-								data-target="#delete-modal" onclick="id_global=${user.id};location.href='#';">Excluir</button></td>
+								class="btn btn-warning btn-xs" href="edit.html">Editar</a>
+								<button type="button" class="btn btn-danger btn-xs"
+									data-toggle="modal" data-target="#delete-modal"
+									onclick="id_global=${user.id};location.href='#';">Excluir</button></td>
 						</tr>
 					</c:forEach>
 
@@ -90,7 +97,8 @@
 			</table>
 		</div>
 	</div>
-	<div id="msg" class="vol-md-1 validation-summary-errors text-danger"> </div>
+	<div id="msg" class="vol-md-1 validation-summary-errors text-danger">
+	</div>
 	<!-- /#list -->
 
 	<div id="bottom" class="row">
@@ -102,7 +110,8 @@
 						<li class="disabled"><a>Anterior</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="/user/list/${page-1}?criteria=${criteria.criteria}">Anterior</a></li>
+						<li><a
+							href="<c:url value="/user/list/${page-1}?criteria=${criteria.criteria}"/>">Anterior</a></li>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach var="i" begin="1" end="${pages}">
@@ -111,7 +120,8 @@
 							<li class="disabled"><a>${i }</a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="/user/list/${i}?criteria=${criteria.criteria}">${i }</a></li>
+							<li><a
+								href="<c:url value="/user/list/${i}?criteria=${criteria.criteria}"/>">${i }</a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -120,10 +130,11 @@
 						<li class="disabled"><a>Próximo</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="/user/list/${page+1}?criteria=${criteria.criteria}">Próximo</a></li>
+						<li><a
+							href="<c:url value ="/user/list/${page+1}?criteria=${criteria.criteria}"/>">Próximo</a></li>
 					</c:otherwise>
 				</c:choose>
-				
+
 			</ul>
 			<!-- /.pagination -->
 		</div>

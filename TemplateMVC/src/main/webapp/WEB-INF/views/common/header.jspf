@@ -41,8 +41,8 @@
 							data-toggle="dropdown" role="button" aria-haspopup="true"
 							aria-expanded="false">Menu <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="/user/list">List User</a></li>
-								<li><a href="/user/register">New User</a></li>
+								<li><a href="<c:url value="/user/list"/>">List User</a></li>
+								<li><a href="<c:url value="/user/register"/>">New User</a></li>
 							</ul></li>
 					</c:if>
 

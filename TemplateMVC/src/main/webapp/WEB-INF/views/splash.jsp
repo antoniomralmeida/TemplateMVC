@@ -64,8 +64,8 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="#about"><spring:message code="about.message" /></a></li>
-					<li><a href="/user/register"><spring:message code="register.message" /></a></li>
-					<li><a href="/login">Login</a></li>
+					<li><a href="<c:url value="/user/register"/>"><spring:message code="register.message" /></a></li>
+					<li><a href="<c:url value="/login"/>">Login</a></li>
 					<li><a href="<c:url value="/home?locale=en"/>" >English</a></li>
 					<li><a href="<c:url value="/home?locale=pt_BR"/>">Português</a></li>
 				</ul>
@@ -111,9 +111,9 @@
 						<li class="footer-menu-divider">&sdot;</li>
 						<li><a href="#about">About</a></li>
 						<li class="footer-menu-divider">&sdot;</li>
-						<li><a href="/user/register">Registrar</a></li>
+						<li><a href="<c:url value="/user/register"/>"><spring:message code="register.message" /></a></li>
 						<li class="footer-menu-divider">&sdot;</li>
-						<li><a href="/login">Login</a></li>
+						<li><a href="<c:url value="/login"/>">Login</a></li>
 					</ul>
 					<p class="copyright text-muted small">Copyright &copy; OPENCARE 2017. All Rights Reserved</p>
 				</div>
